@@ -67,6 +67,11 @@ int main(void) {
 	Log_Msg("E-paper display initialized");
 
 
+	if (EPD_Display_Clear(WHITE) != EPD_OK) {
+		Log_Msg("Error clearing E-paper display screen");
+		Error_Handler();
+	}
+
 	if (SDC_Init() != SDC_OK) {
 		Log_Msg("Error initializing SD card");
 		Error_Handler();
@@ -78,12 +83,6 @@ int main(void) {
 		Error_Handler();
 	}
 	Log_Msg("FAT32 initialized!!");
-
-
-	if (EPD_Display_Clear(WHITE) != EPD_OK) {
-		Log_Msg("Error clearing E-paper display screen");
-		Error_Handler();
-	}
 
 	fat32_ret = FAT32_Read_File_From_Root_Dir_And_Process_Data(filename_buffer,
 			data_buffer, &EPD_Display_Image_Callback);
@@ -99,6 +98,11 @@ int main(void) {
 		Error_Handler();
 	}
 
+	if (SDC_Power_Off() != SDC_OK) {
+		Log_Msg("Error powering off SD card");
+		Error_Handler();
+	}
+
 	HAL_Delay(2000);
 
 	if (EPD_Put_To_Sleep() != EPD_OK) {
@@ -111,11 +115,6 @@ int main(void) {
 
 	if (EPD_De_Init() != EPD_OK) {
 		Log_Msg("Error de-initializing E-paper display");
-		Error_Handler();
-	}
-
-	if (SDC_Power_Off() != SDC_OK) {
-		Log_Msg("Error powering off SD card");
 		Error_Handler();
 	}
 
@@ -209,6 +208,10 @@ void Error_Handler(void) {
 	while(1);
 }
 
+/**
+ * Configure the MCU to consume the least amount of current when sleeping, in
+ * order to extend battery life
+ */
 static void Configure_For_Low_Power(void) {
 	// Put *UNUSED* GPIO Pins in Analog mode and disable clock to
 	// them to save power: Application note 4899, Section 7

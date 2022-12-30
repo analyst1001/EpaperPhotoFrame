@@ -5,6 +5,7 @@ extern void EPD_SPI_Msp_Init(void);
 extern void Logger_Msp_Init(void);
 extern void RTC_Msp_Init(void);
 extern void EPD_SPI_Msp_Deinit(void);
+extern void SDC_SPI_Msp_De_Init(void);
 
 /**
  * Low level initialization for STM32 HAL
@@ -61,5 +62,8 @@ void HAL_SPI_MspDeInit(SPI_HandleTypeDef *hspi)
 {
 	if (hspi->Instance == SPI1) {
 		EPD_SPI_Msp_Deinit();
+	}
+	else if (hspi->Instance == SPI2) {
+		SDC_SPI_Msp_De_Init();
 	}
 }

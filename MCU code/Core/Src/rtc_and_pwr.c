@@ -33,7 +33,7 @@ RTC_Status RTC_Init(void) {
 void PWR_Enter_Low_Power_Mode(void) {
 	__HAL_RTC_WAKEUPTIMER_CLEAR_FLAG(&hrtc, RTC_FLAG_WUTF);
 	__HAL_PWR_CLEAR_FLAG(PWR_FLAG_WU);
-	HAL_PWREx_EnterSHUTDOWNMode();
+	HAL_PWR_EnterSTANDBYMode();
 }
 
 

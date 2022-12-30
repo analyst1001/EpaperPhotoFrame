@@ -1,8 +1,10 @@
+#include <assert.h>
 #include "stm32l4xx_hal.h"
 #include "sdcard.h"
 
 /*
  * Use SPI2 for communication with SD Card: NSS(PD5), SCK(PD1), MISO(PD3), MOSI(PD4)
+ * Use PD0 for controlling SD Card power switch
  */
 static SPI_HandleTypeDef hspi2;
 
@@ -71,10 +73,21 @@ static SDC_Status Do_ACMD41_Init(const SDC_Type card_type);
 static SDC_Status Do_CMD58_Init(SDC_Type *restrict const card_type);
 static HAL_StatusTypeDef SDC_SPI_Deselect(void);
 static HAL_StatusTypeDef SDC_SPI_Select(void);
+static void SDC_Power_Pin_Init(void);
+static void SDC_Power_Enable(void);
+static void SDC_Power_Disable(void);
 
 SDC_Status SDC_Init(void) {
 	// Assume the card type is unknown until it is initialized
 	SD_card_type = CARD_UNKNOWN;
+
+	// Initialize pin to power up SD card
+	SDC_Power_Pin_Init();
+
+	// Enable power to SD card
+	SDC_Power_Enable();
+
+	HAL_Delay(10);
 
 	SDC_Status ret;
 	ret = SPI2_Init(SDC_SPI_SPEED_LOW);	// Use low speed for initial setup
@@ -176,7 +189,45 @@ SDC_Status SDC_Power_Off(void) {
 	if (HAL_SPI_DeInit(&hspi2) != HAL_OK) {
 		return SDC_POWEROFF_IO_DEINIT_ERR;
 	}
+	HAL_Delay(1000);
+	HAL_Delay(6);
+	SDC_Power_Disable();
+	HAL_Delay(6);
 	return SDC_OK;
+}
+
+/**
+ * Initialize the GPIO pin that controls power to the SD card
+ */
+static void SDC_Power_Pin_Init(void) {
+	GPIO_InitTypeDef gpio_sdpwr = {0};
+
+	__HAL_RCC_GPIOD_CLK_ENABLE();
+	gpio_sdpwr.Pin = GPIO_PIN_0;
+	gpio_sdpwr.Mode = GPIO_MODE_OUTPUT_PP;
+	gpio_sdpwr.Pull = GPIO_PULLDOWN;
+	gpio_sdpwr.Speed = GPIO_SPEED_FREQ_LOW;
+	HAL_GPIO_Init(GPIOD, &gpio_sdpwr);
+
+	// Set the pin to pulldown during MCU sleep so that SD card remains powered
+	// off
+	HAL_PWREx_EnablePullUpPullDownConfig();
+	// Return value should be HAL_OK since we used correct GPIO bank
+	assert(HAL_PWREx_EnableGPIOPullDown(PWR_GPIO_D, PWR_GPIO_BIT_0) == HAL_OK);
+}
+
+/**
+ * Enable power to SD card
+ */
+static void SDC_Power_Enable(void) {
+	HAL_GPIO_WritePin(GPIOD, GPIO_PIN_0, SET);
+}
+
+/**
+ * Disable power to SD card
+ */
+static void SDC_Power_Disable(void) {
+	HAL_GPIO_WritePin(GPIOD, GPIO_PIN_0, RESET);
 }
 
 /**
@@ -249,6 +300,11 @@ void SDC_SPI_Msp_Init(void) {
  */
 void SDC_SPI_Msp_De_Init(void) {
 	__HAL_RCC_SPI2_CLK_DISABLE();
+	// Configure all IO channels as pull-up and power down the SD card. Logic is
+	// based on data present in https://thecavepearlproject.org/2017/05/21/switching-off-sd-cards-for-low-power-data-logging/
+	HAL_PWREx_EnablePullUpPullDownConfig();
+	assert(HAL_PWREx_EnableGPIOPullUp(PWR_GPIO_D, GPIO_PIN_1 | GPIO_PIN_3 | GPIO_PIN_4 | GPIO_PIN_5) == HAL_OK);
+	SDC_Power_Disable();
 	HAL_GPIO_DeInit(GPIOD, GPIO_PIN_1 | GPIO_PIN_3 | GPIO_PIN_4 | GPIO_PIN_5);
 }
 
