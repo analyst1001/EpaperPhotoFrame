@@ -289,7 +289,7 @@
     (property "Value" "Conn_ARM_JTAG_SWD_20" (id 1) (at 104.14 104.1399 0)
       (effects (font (size 1.27 1.27)) (justify right))
     )
-    (property "Footprint" "" (id 2) (at 130.175 129.54 0)
+    (property "Footprint" "Connector_PinHeader_2.54mm:PinHeader_2x10_P2.54mm_Vertical" (id 2) (at 130.175 129.54 0)
       (effects (font (size 1.27 1.27)) (justify left top) hide)
     )
     (property "Datasheet" "http://infocenter.arm.com/help/topic/com.arm.doc.dui0499b/DUI0499B_system_design_reference.pdf" (id 3) (at 109.855 134.62 90)
