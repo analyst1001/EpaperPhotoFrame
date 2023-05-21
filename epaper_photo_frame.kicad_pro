@@ -57,12 +57,14 @@
         }
       ],
       "drc_exclusions": [
-        "clearance|135650000|139700000|ca426b0b-5d82-4a5f-94ca-4e21134a2db0|03a51ab7-5173-49bd-aeac-6a790c48570b",
-        "clearance|136150000|139700000|44bc7589-54e5-4d06-a4cd-b52529322ea7|03a51ab7-5173-49bd-aeac-6a790c48570b",
+        "clearance|136050000|135250000|c5923f58-4c3c-46c9-bd69-b8c187bffa83|42e397a3-39de-445d-a6a4-815be812417e",
         "clearance|136750000|135800000|fd054867-7c3c-4b1b-87b7-b42183d44d17|e1617c61-256b-40ad-9a0b-56418a43c24e",
         "courtyards_overlap|126700001|135300001|4b8ed60b-c7e0-4ca2-ad9f-104427278018|9c273dd3-256c-4793-a8a3-d9d93dc7a4f7",
         "courtyards_overlap|128700001|135300001|42e8b813-6075-4f37-ad33-f5adcecc7d87|4b8ed60b-c7e0-4ca2-ad9f-104427278018",
         "courtyards_overlap|133300001|135300001|1731e5c0-3cf3-47ef-a8e2-aca79b08ec39|4b8ed60b-c7e0-4ca2-ad9f-104427278018",
+        "courtyards_overlap|134850001|137450001|4b8ed60b-c7e0-4ca2-ad9f-104427278018|db38754c-fd84-47dc-a722-d0e08c9ce5d2",
+        "courtyards_overlap|134850001|137850001|4b8ed60b-c7e0-4ca2-ad9f-104427278018|db38754c-fd84-47dc-a722-d0e08c9ce5d2",
+        "courtyards_overlap|135300001|134750001|4b8ed60b-c7e0-4ca2-ad9f-104427278018|b372ba27-5e45-449c-bedd-b38563af32b9",
         "courtyards_overlap|135400001|135300001|4b8ed60b-c7e0-4ca2-ad9f-104427278018|b372ba27-5e45-449c-bedd-b38563af32b9",
         "courtyards_overlap|135400001|138200001|4b8ed60b-c7e0-4ca2-ad9f-104427278018|db38754c-fd84-47dc-a722-d0e08c9ce5d2",
         "courtyards_overlap|136500001|135300001|4b8ed60b-c7e0-4ca2-ad9f-104427278018|4ededdb6-8c72-4d6a-823b-13a39460c69a",
@@ -673,7 +675,7 @@
         "pattern": "/Display Adapter/3v3_HPF"
       },
       {
-        "netclass": "+3v3",
+        "netclass": "GND",
         "pattern": "/Display Adapter/BS0"
       },
       {
