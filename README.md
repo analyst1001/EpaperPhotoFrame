@@ -30,4 +30,3 @@ The branch `development_board` has code to run software on the development board
 - Use a data logger to measure instantaneous current consumption value with better resolution.
 - Re-write the logic to use interrupt based processing. The SPI based communication can use interrupt based processing where the MCU can be put into low-power sleep mode when waiting for data transmission/reception. Same can be used when waiting for BUSY signal from E-paper display and time delays in the logic.
 - Use DMA peripheral to transmit/receive large data blobs (image pixel data). STM32L4 series processor support a feature called Batch Acquisition sub-mode(BAM), as mentioned in Section 2.1.1 of [AN4621](https://www.st.com/resource/en/application_note/an4621-stm32l4-and-stm32l4-ultralowpower-features-overview-stmicroelectronics.pdf), that could allow this.
-- Create an enclosure to hold E-paper screen, PCB, and battery that can be hung on a wall.

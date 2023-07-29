@@ -1,0 +1,14 @@
+Item, Quantity, URL, Comments
+Enclosure front cover, 1, https://github.com/analyst1001/EpaperPhotoFrame/tree/main/Enclosure,
+Enclosure back cover, 1, https://github.com/analyst1001/EpaperPhotoFrame/tree/main/Enclosure,
+Enclosure hanging attachment (optional), 1, https://github.com/analyst1001/EpaperPhotoFrame/tree/main/Enclosure,
+PCB, 1, https://github.com/analyst1001/EpaperPhotoFrame/tree/main/PCB,BOM for PCB should be present in PCB directory
+7.3inch ACeP 7-Color E-Paper E-Ink Display Module (800×480 Pixels), 1, https://www.waveshare.com/product/displays/e-paper/epaper-1/7.3inch-e-paper-f.htm,Buy one with 
+M3 x 0.5 mm screws, 4, https://www.mcmaster.com/91280A039/,
+M3 x 0.5 mm nuts, 4, https://www.mcmaster.com/90592A085/,
+LiPo battery (2000mAh), 1, https://mou.sr/4784RWG,Lower capacity battery should also be fine
+LED Red, 1, ,Any other color to represent error state can be used
+LED Blue, 1, ,Any other color to represent busy state can be used
+Wires, 4, ,To connect LEDs to PCB. Preferrably red for positive terminals and black for negative terminals
+Double sided tape or Velcro tape, 1, ,To attach battery to back cover
+Glue, 1, ,To attach screws to back cover
